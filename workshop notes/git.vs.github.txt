@@ -1,0 +1,29 @@
+Git is a tool for version control for your documents; mostly code
+- push and pull on your own 
+Github: "Git server" = manage version history with yourself 
+    -central cloud server for browse code on github
+
+Branch -- you work on your part and then bring back together. 
+Key terminology:
+    - Repository ('repo'): a folder of code GitHub is Tracking (top-hub folder with hold project)
+    - Stage: area where you place changes before you commit them 
+        - save changes in Git by putting them on a Stage
+    - commit:
+        - verb(to commit): gorup up your edits into one logical changes
+        - noun(a commit): a snapshot of your files at a given time
+    - staging: 
+        - control when the files are committed (staging first two files, then staging the third)
+    - git status: where 
+    - git add README #adds the readme to the bundled changes 
+    - git add. #adds all of the changes 
+        - git is green = knows  
+    - tracking and staging pretty much mean the same thing; tracking (history)
+- can uncommit a change 
+    - revert back to previous versions 
+    - git revert goes back to old version 
+    - git log -- sees all commits that you've made and see the messages -m is message
+- code folder you want to open 
+- control shift p (install code command) from terminal to get to vs code 
+- git pull brings down people's code
+- git push is where you push your own changes 
+    - failed to push: haven't logged in onto your local computer yet 

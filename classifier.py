@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 nlp = spacy.load("en_core_web_sm")
 
+# converts raw text data to vector values for training
 def text2vec(file_name: str):
     # read text file dataset 
     with open(file_name, 'r') as file:
@@ -18,12 +19,12 @@ def text2vec(file_name: str):
         # treat sentence as a spaCy object
         doc = nlp(sentence)
         # convert tokens in sentence to vector representations (numPy array)
-        vectors = [token.vector for token in doc if not token.is_punct]
-        # rejoin processed sentence + append to list
+        vectors = [token.vector for token in doc if not token.is_punct] # ignore punctuation
+        # append each vectorised sentence's values array to main array
         vectorised_text.append(vectors)
     return vectorised_text
 
-def 
+
 
 
 

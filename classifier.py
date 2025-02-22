@@ -19,9 +19,11 @@ def text2token(file_name: str):
         lowered = sentence.lower()
         doc = nlp(sentence) # treat sentence as a spaCy object
         # convert sentence to a list of tokens
-        tokens = [token.text for token in doc if not token.is_punct] # ignore punctuation
-        tokenised_text.append(" ".join(tokens)) # add list of tokens to main list
+        tokens = [token.lemma_ for token in doc if not token.is_punct] # ignore punctuation
+        tokenised_text.append(tokens) # add list of tokens to main list
     return tokenised_text
+
+
 
 
 

@@ -1,0 +1,24 @@
+from flask import Flask, render_template, request, jsonify
+from new_class_file import use_classifier 
+
+app = Flask(__name__)
+
+# Serve HTML page
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# API endpoint to handle data from frontend
+@app.route('/api/data', methods=['POST'])
+def handle_data():
+    data = request.json  # Receive JSON data from frontend
+    name = data.get('name', '') # Get sentence inputed in frontend
+    
+    with open("data.txt", "a") as file:
+        file.write(name)
+    
+    state = use_classifier(data.txt) # determines state of mad hatter using backend function
+    return str (state) # returns int from backend
+
+if __name__ == '__main__':
+    app.run(debug=True)

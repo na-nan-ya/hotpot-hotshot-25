@@ -17,7 +17,7 @@ def handle_data():
     with open("data.txt", "a") as file:
         file.write(name)
     
-    state = use_classifier(data.txt) # determines state of mad hatter using backend function
+    state = use_classifier("data.txt") # determines state of mad hatter using backend function
     return str (state) # returns int from backend
 
 if __name__ == '__main__':

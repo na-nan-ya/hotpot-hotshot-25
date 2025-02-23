@@ -76,10 +76,10 @@ class Mad_Hatter(nn.Module):
         input_batch = self.fc_layer_2(input_batch)  
         return input_batch  
 
-    def create_model(input_size, hidden_size):
-        model = Mad_Hatter(input_size, hidden_size)
-        loss_function = nn.BCEWithLogitsLoss()
-        optimizer = optim.Adam(model.parameters(), lr = 0.001)
+    # def create_model(input_size, hidden_size):
+    # model = Mad_Hatter(1, 64)
+    # loss_function = nn.BCEWithLogitsLoss()
+    # optimizer = optim.Adam(model.parameters(), lr = 0.001)
     
     def train_binary_classification(model, data_loader, loss_f, optim, num_epochs = 10):
         model.train()
@@ -110,7 +110,18 @@ class Mad_Hatter(nn.Module):
 
     #def print_results(predict_list, label_list)
                 
+    def main():
+        classifier = Mad_Hatter(1, 64)
+        loss_function = nn.BCEWithLogitsLoss()
+        optimizer = optim.Adam(classifier.parameters(), lr = 0.001)
 
+        test = text2token("/Users/ananya/Desktop/test.txt")
+        loader = create_data_loaders(test, "train")
+        
+        classifier.feedforward(loader)
+
+        classifier.train_binary_classification()
+        
 
 
 

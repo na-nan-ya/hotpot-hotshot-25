@@ -5,7 +5,7 @@ _Our team name is Hotpot Hotshot. The goal of the project was to design a gibber
 
 **The Team: Include the names of all your team members. For each, describe in a few words how they contributed to the project!**
 
-_Marin -- designed our UI (our Mad Hatter) and front-end model along with our presentation
+_Marin -- designed our UI (our Mad Hatter) and front-end model along with our presentation_
 
 _Jessica -- collected and generated data sets, worked on creating and fine tuning the model_
 

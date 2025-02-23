@@ -121,6 +121,8 @@ class Mad_Hatter(nn.Module):
         classifier.feedforward(loader)
 
         classifier.train_binary_classification()
+        x = 2
+        y = 4
         
 
 """

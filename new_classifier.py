@@ -1,4 +1,5 @@
 
+
 import torch
 import spacy
 
@@ -12,7 +13,6 @@ from torch.utils.data import TensorDataset,DataLoader
 from sklearn.model_selection import train_test_split
 
 nlp = spacy.load("en_core_web_sm")
-dataset_size = 100
 
 def text2token(file_name: str):
     with open(file_name, 'r') as file:
@@ -23,9 +23,11 @@ def text2token(file_name: str):
     token_vectors = [token.vector for token in flat_tokens]
     return token_vectors
 
-def create_data_loaders(vector_list: list, train_or_test: str):
+def create_data_loaders(vector_list: list, train_or_test: str, order: str):
     vectorised_data = np.array(vector_list)
-    label_array = np.array(generate_labels(dataset_size, "eng"))
+    label_list = generate_labels(len(vectorised_data) // 2, order)
+    label_list.append(1)
+    label_array = np.array(label_list)
     data_train, data_test, label_train, label_test \
     = train_test_split(vectorised_data, label_array, test_size = 0.2, random_state = None)
 
@@ -52,14 +54,14 @@ def count(tokenList: list):
 def generate_labels(num_items: int, first: str):
     binary_labels = []
     if first == 'eng':
-        for num in range(0, num_items + 1):
+        for num in range(0, num_items):
             binary_labels.append(1)
-        for num in range(0, num_items + 1):
+        for num in range(0, num_items):
             binary_labels.append(0)
     else:
-        for num in range(0, num_items + 1):
+        for num in range(0, num_items):
             binary_labels.append(0)
-        for num in range(0, num_items + 1):
+        for num in range(0, num_items):
             binary_labels.append(1)
     return binary_labels
 
@@ -67,7 +69,7 @@ class Mad_Hatter(nn.Module):
     def __init__(self, input_size, hidden_size):
         super(Mad_Hatter, self).__init__()
         self.fc_layer_1 = nn.Linear(input_size, hidden_size)
-        self.fc_layer_2 = nn.Linear(hidden_size, 2) 
+        self.fc_layer_2 = nn.Linear(hidden_size, 1) 
         self.relu = nn.ReLU() 
 
     def feedforward(self, input_batch):
@@ -75,19 +77,14 @@ class Mad_Hatter(nn.Module):
         input_batch = self.relu(input_batch)  
         input_batch = self.fc_layer_2(input_batch)  
         return input_batch  
-
-    # def create_model(input_size, hidden_size):
-    # model = Mad_Hatter(1, 64)
-    # loss_function = nn.BCEWithLogitsLoss()
-    # optimizer = optim.Adam(model.parameters(), lr = 0.001)
     
-    def train_binary_classification(model, data_loader, loss_f, optim, num_epochs = 10):
+    def train_binary_classification(model, data_loader, loss_f, optim, num_epochs):
         model.train()
         for epoch in range(num_epochs):
             loss_accumulation = 0.0 # track total loss for entire epoch
             for data, labels in data_loader:
                 optim.zero_grad() # reset gradients of all parameters every iteration
-                outputs = model(data) # forward pass of input through model (produces raw output scores)
+                outputs = model.feedforward(data) # forward pass of input through model (produces raw output scores)
                 loss = loss_f(outputs.squeeze(), labels.float()) # compute binary loss between predicted outputs and true labels
                 loss.backward() # backward pass for autograd of each parameter
                 optim.step() # adjust learning rate
@@ -96,51 +93,39 @@ class Mad_Hatter(nn.Module):
 
     def evaluate_model(model, data_loader):
         model.eval() # set model to evaluation mode
-        predictions = []
-        labels = []
+        all_predictions = []
+        all_labels = []
+        correct = 0
+        total = 0
 
         with torch.no_grad():
-            for data, labels in data_loader:
-                output = model(data)
+            for data, label in data_loader:
+                output = model.feedforward(data)
                 prob = torch.sigmoid(output)
                 predict = (prob > 0.5).float()
-                predictions.extend(predict.squeeze().tolist())  
-                labels.extend(labels.tolist())
-        return predictions, labels
+                all_predictions.extend(predict.squeeze().tolist())  
+                all_labels.extend(label.tolist())
+                correct += (predict.squeeze() == label).sum().item()
+                total += label.size(0)
+            accuracy = 100 * correct / total
+            print(f"Testing Accuracy: {accuracy:.2f}%")
+            return all_predictions, all_labels, accuracy  
+
 
     #def print_results(predict_list, label_list)
                 
-    def main():
-        classifier = Mad_Hatter(1, 64)
-        loss_function = nn.BCEWithLogitsLoss()
-        optimizer = optim.Adam(classifier.parameters(), lr = 0.001)
+classifier = Mad_Hatter(96, 64)
 
-        test = text2token("/Users/ananya/Desktop/test.txt")
-        loader = create_data_loaders(test, "train")
-        
-        classifier.feedforward(loader)
+loss_function = nn.BCEWithLogitsLoss()
+optimizer = optim.Adam(classifier.parameters(), lr = 0.001)
 
-        classifier.train_binary_classification()
-        x = 2
-        y = 4
-        
+test = text2token("/Users/ananya/Desktop/training.csv")
+loader = create_data_loaders(test, "train", "gib")
+classifier.train_binary_classification(loader, loss_function, optimizer, 10)
+classifier.evaluate_model(loader)
 
-"""
-Read and Tokenize Data:
-Use text2token() to process test.txt.
-Generate Labels:
-Use generate_labels() to generate binary labels (1 for English, 0 for gibberish).
-Create Data Loaders:
-Use create_data_loaders() to create training and test data loaders.
-Initialize Model:
-Create an instance of the Mad_Hatter class.
-Define the loss function (nn.BCEWithLogitsLoss()) and optimizer (optim.Adam()).
-Train the Model:
-Call train_binary_classification() to train the model using the training data loader.
-Evaluate the Model:
-Call evaluate_model() to assess the model's performance using the test data loader.
-Print the Results:
-Display the predictions and true labels for each sentence in the dataset.
-"""
+
+
+
 
 

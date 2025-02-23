@@ -6,9 +6,12 @@ _Our team name is Hotpot Hotshot. The goal of the project was to design a gibber
 **The Team: Include the names of all your team members. For each, describe in a few words how they contributed to the project!**
 
 _Marin -- designed our UI (our Mad Hatter) and front-end model along with our presentation
-Jessica -- collected and generated data sets, worked on creating and fine tuning the model 
-Ananya -- brainstormed, built, and tested the NLP model
-Presha -- connect our backend NLP model with the front end, worked on the design with Marin as well._
+
+_Jessica -- collected and generated data sets, worked on creating and fine tuning the model_
+
+_Ananya -- brainstormed, built, and tested the NLP model_
+
+_Presha -- connect our backend NLP model with the front end, worked on the design with Marin as well._
 
 **Acknowledgements: If your project uses major pieces of code from other sources— external libraries, other hackers, and ChatGPT— please cite them here! We’d love to give credit where credit’s due.**
 
@@ -27,7 +30,7 @@ In the future, we hope to incorporate our basic concept and design to integrate 
 
 **Tell us about a tricky bug, a design challenge, or that you encountered. How did your team tackle it together?**
 
-_We ran into many challenges. For example, Trying to process the data and uploading it to the repo was impossible as the data file generated was too big for the git to handle. To fix this I had to write a function that would split the data into many separate files for them to upload properly._ In addition, trying to figuring out what model to use and accuracy rates, understanding the APIs of new libraries that we've never used before were some of the other big challenges we faced. To solve these issues, it was about taking the time to understand and practice with the functions and variables necessary for the models and libraries to work._
+_We ran into many challenges. For example, Trying to process the data and uploading it to the repo was impossible as the data file generated was too big for the git to handle. To fix this I had to write a function that would split the data into many separate files for them to upload properly. In addition, trying to figuring out what model to use and accuracy rates, understanding the APIs of new libraries that we've never used before were some of the other big challenges we faced. To solve these issues, it was about taking the time to understand and practice with the functions and variables necessary for the models and libraries to work._
 
 **Tell us about one fun or interesting experience that you had with other hackers! Did you get coffee with new friends? Did you attend a workshop that inspired you? Did you meet someone new?**
 

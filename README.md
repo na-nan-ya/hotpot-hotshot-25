@@ -1,14 +1,14 @@
 # hotpot-hotshot-25
 **The Project: Include your team name, and 2 to 3 sentences describing the goal of your project. What were your goals, and what did you accomplish over the weekend?**
 
-Our team name is Hotpot Hotshot. The goal of the project was to design a gibberish detector using NLP modeling and neural network structures that would classify groups of words as actual english compared to gibberish. Over the weekend, we were able to collect and generate data sets of words, build a training model, and present the tool in a fun, on-theme Alice and Wonderland through our UI and front-end design. 
+_Our team name is Hotpot Hotshot. The goal of the project was to design a gibberish detector using NLP modeling and neural network structures that would classify groups of words as actual english compared to gibberish. Over the weekend, we were able to collect and generate data sets of words, build a training model, and present the tool in a fun, on-theme Alice and Wonderland through our UI and front-end design._
 
 **The Team: Include the names of all your team members. For each, describe in a few words how they contributed to the project!**
 
-Marin -- designed our UI (our Mad Hatter) and front-end model along with our presentation
+_Marin -- designed our UI (our Mad Hatter) and front-end model along with our presentation
 Jessica -- collected and generated data sets, worked on creating and fine tuning the model 
 Ananya -- brainstormed, built, and tested the NLP model
-Presha -- connect our backend NLP model with the front end, worked on the design with Marin as well. 
+Presha -- connect our backend NLP model with the front end, worked on the design with Marin as well._
 
 **Acknowledgements: If your project uses major pieces of code from other sources— external libraries, other hackers, and ChatGPT— please cite them here! We’d love to give credit where credit’s due.**
 

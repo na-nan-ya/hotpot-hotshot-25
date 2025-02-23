@@ -123,6 +123,22 @@ class Mad_Hatter(nn.Module):
         classifier.train_binary_classification()
         
 
-
+"""
+Read and Tokenize Data:
+Use text2token() to process test.txt.
+Generate Labels:
+Use generate_labels() to generate binary labels (1 for English, 0 for gibberish).
+Create Data Loaders:
+Use create_data_loaders() to create training and test data loaders.
+Initialize Model:
+Create an instance of the Mad_Hatter class.
+Define the loss function (nn.BCEWithLogitsLoss()) and optimizer (optim.Adam()).
+Train the Model:
+Call train_binary_classification() to train the model using the training data loader.
+Evaluate the Model:
+Call evaluate_model() to assess the model's performance using the test data loader.
+Print the Results:
+Display the predictions and true labels for each sentence in the dataset.
+"""
 
 

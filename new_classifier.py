@@ -58,6 +58,19 @@ def generate_labels(num_items: int, first: str):
             binary_labels.append(1)
     return binary_labels
 
+class Mad_Hatter(nn.Module):
+    def __init__(self, input_size, hidden_size):
+        super(Mad_Hatter, self).__init__()
+        
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, 2) 
+        self.relu = nn.ReLU() 
+
+    def forward(self, x):
+        x = self.fc1(x)  
+        x = self.relu(x)  
+        x = self.fc2(x)  
+        return x  
 
 
 

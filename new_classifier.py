@@ -7,10 +7,12 @@ import numpy as np
 import sklearn as sk
 import torch.nn as nn
 import torch.optim as optim
+import matplotlib.pyplot as plt
 
 from collections import Counter
 from torch.utils.data import TensorDataset,DataLoader
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -69,14 +71,22 @@ class Mad_Hatter(nn.Module):
     def __init__(self, input_size, hidden_size):
         super(Mad_Hatter, self).__init__()
         self.fc_layer_1 = nn.Linear(input_size, hidden_size)
-        self.fc_layer_2 = nn.Linear(hidden_size, 1) 
-        self.relu = nn.ReLU() 
+        self.fc_layer_2 = nn.Linear(hidden_size, hidden_size)
+        self.fc_layer_3 = nn.Linear(hidden_size, 1)
+        self.batch_norm_1 = nn.BatchNorm1d(hidden_size)
+        self.batch_norm_2 = nn.BatchNorm1d(hidden_size)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(0.5) 
 
     def feedforward(self, input_batch):
-        input_batch = self.fc_layer_1(input_batch)  
-        input_batch = self.relu(input_batch)  
-        input_batch = self.fc_layer_2(input_batch)  
-        return input_batch  
+        input_batch = self.fc_layer_1(input_batch)
+        input_batch = self.relu(input_batch)
+        input_batch = self.dropout(input_batch)  # Apply dropout
+        input_batch = self.fc_layer_2(input_batch)
+        input_batch = self.relu(input_batch)
+        input_batch = self.fc_layer_3(input_batch)
+        return input_batch
+ 
     
     def train_binary_classification(model, data_loader, loss_f, optim, num_epochs):
         model.train()
@@ -114,15 +124,47 @@ class Mad_Hatter(nn.Module):
 
     #def print_results(predict_list, label_list)
                 
-classifier = Mad_Hatter(96, 64)
+classifier = Mad_Hatter(96, 512)
 
 loss_function = nn.BCEWithLogitsLoss()
-optimizer = optim.Adam(classifier.parameters(), lr = 0.001)
+optimizer = optim.Adam(classifier.parameters(), lr = 0.0005)
 
 test = text2token("/Users/ananya/Desktop/training.csv")
 loader = create_data_loaders(test, "train", "gib")
-classifier.train_binary_classification(loader, loss_function, optimizer, 10)
+classifier.train_binary_classification(loader, loss_function, optimizer, 150)
 classifier.evaluate_model(loader)
+
+torch.save(classifier.state_dict(), 'trained_model.pth')
+
+classifier.load_state_dict(torch.load('trained_model.pth'))
+
+classifier.eval()
+
+test_data = text2token("/Users/ananya/Desktop/training.csv")  
+test_loader = create_data_loaders(test_data, "test", "gib")  
+
+all_predictions = []
+all_labels = []
+correct = 0
+total = 0
+
+with torch.no_grad():  
+    for data, label in test_loader: 
+        output = classifier.feedforward(data) 
+        prob = torch.sigmoid(output) 
+        predict = (prob > 0.5).float() 
+        
+        
+        all_predictions.extend(predict.squeeze().tolist())
+        all_labels.extend(label.tolist())
+        
+        correct += (predict.squeeze() == label).sum().item()
+        total += label.size(0)
+
+
+accuracy = 100 * correct / total
+print(f"Testing Accuracy on Test Dataset: {accuracy:.2f}%")
+
 
 
 

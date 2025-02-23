@@ -1,0 +1,13 @@
+#fake backend to prototype connecting back end with front end.
+
+import random
+
+
+def fakeFunction():
+    answer = input('\n')
+    print(answer)
+    randomInt = random.randint(0, 1)
+    print(randomInt)
+    return randomInt
+
+fakeFunction();

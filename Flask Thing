@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from new_class_file import use_classifier 
+from fakeBackend import fakeFunction 
 
 app = Flask(__name__)
 
@@ -17,7 +17,8 @@ def handle_data():
     with open("data.txt", "a") as file:
         file.write(name)
     
-    state = use_classifier("data.txt") # determines state of mad hatter using backend function
+    state = fakeFunction("data.txt") # determines state of mad hatter using backend function
+    print(state)
     return str (state) # returns int from backend
 
 if __name__ == '__main__':

@@ -22,12 +22,42 @@
             top: 250px;  /* 100px from the top of the page */
             left: 200px;  /* 50px from the left of the page */
         }
+
+        #textInput {
+            width: 200px;  /* Set the width of the text box */
+            height: 40px;  /* Set the height of the text box */
+            padding: 10px;  /* Optional: add padding inside the text box */
+            font-size: 16px;  /* Optional: control text size */
+            position: absolute;  /* Position it absolutely */
+            top: 250px;  /* 100px from the top of the page */
+            left: 200px;  /* 50px from the left of the page */
+        }
+        #textBut {
+            width: 125px;  /* Set the width of the text box */
+            height: 40px;  /* Set the height of the text box */
+            padding: 10px;  /* Optional: add padding inside the text box */
+            font-size: 16px;  /* Optional: control text size */
+            position: absolute;  /* Position it absolutely */
+            top: 350px;  /* 100px from the top of the page */
+            left: 175px;  /* 50px from the left of the page */
+        }
+        #textTon {
+            width: 125px;  /* Set the width of the text box */
+            height: 40px;  /* Set the height of the text box */
+            padding: 10px;  /* Optional: add padding inside the text box */
+            font-size: 16px;  /* Optional: control text size */
+            position: absolute;  /* Position it absolutely */
+            top: 350px;  /* 100px from the top of the page */
+            left: 325px;  /* 50px from the left of the page */
+        }
+
+
     </style>
 </head>
 <body>
     <input type="text" id="textInput" placeholder="Type your sentence here">
-    <button onclick="sendText()">Submit</button>
-
+    <a href="happy.html"><button id="textBut" onclick="sendText()">NonSensical</button></a>
+    <a href="angry.html"><button id="textTon" onclick="sendText()">Sensical</button></a>
     <script>
         function sendText() {
             const text = document.getElementById('textInput').value;
@@ -40,7 +70,7 @@
             }
 
             // Send the text to the Flask backend
-            fetch('http://localhost:5000/process_text', {
+            fetch('http://localhost:5500/process_text', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

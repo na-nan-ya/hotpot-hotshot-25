@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Background Image</title>
+    <style>
+        body {
+            margin: 0;  /* Remove default margin */
+            height: 100vh;  /* Full viewport height */
+            background-image: url('Screenshot 2025-02-23 at 1.31.18 PM.png');  /* Replace with your image URL */
+            background-size: cover;  /* Make the image cover the full screen */
+            background-position: center;  /* Center the image */
+            background-repeat: no-repeat;  /* Prevent image repetition */
+        }
+        #textInput {
+            width: 200px;  /* Set the width of the text box */
+            height: 40px;  /* Set the height of the text box */
+            padding: 10px;  /* Optional: add padding inside the text box */
+            font-size: 16px;  /* Optional: control text size */
+            position: absolute;  /* Position it absolutely */
+            top: 250px;  /* 100px from the top of the page */
+            left: 200px;  /* 50px from the left of the page */
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="textInput" placeholder="Type your sentence here">
+    <button onclick="sendText()">Submit</button>
+
+    <script>
+        function sendText() {
+            const text = document.getElementById('textInput').value;
+
+
+            // Check if the text is not empty
+            if (!text) {
+                alert('Please enter some text!');
+                return;  // Stop the function if input is empty
+            }
+
+            // Send the text to the Flask backend
+            fetch('http://localhost:5000/process_text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Check the returned result from the Flask backend
+                if (data.result) {
+                    // If true, navigate to "yes.html"
+                    window.location.href = 'happy.html';
+                } else {
+                    // If false, navigate to "no.html"
+                    window.location.href = 'angry.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

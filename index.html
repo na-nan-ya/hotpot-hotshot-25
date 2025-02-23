@@ -1,0 +1,36 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX Form</title>
+</head>
+<body>
+    <h1>Mad Hatter</h1>
+    
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button onclick="submitData()">Nonsense?</button>
+    
+    <p id="response"></p>
+
+    <script>
+        function submitData() {
+            const name = document.getElementById('nameInput').value;
+            
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: name })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').textContent = data.message;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+</html>

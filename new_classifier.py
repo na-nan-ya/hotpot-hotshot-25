@@ -7,7 +7,6 @@ import numpy as np
 import sklearn as sk
 import torch.nn as nn
 import torch.optim as optim
-import matplotlib.pyplot as plt
 
 from collections import Counter
 from torch.utils.data import TensorDataset,DataLoader
@@ -165,7 +164,12 @@ with torch.no_grad():
 accuracy = 100 * correct / total
 print(f"Testing Accuracy on Test Dataset: {accuracy:.2f}%")
 
-
+def use_classifier(file_name: str):
+    input_tensor = text2token(file_name)
+    classifier.eval()
+    with torch.no_grad():
+        output = classifier(input_tensor)
+    return output
 
 
 
